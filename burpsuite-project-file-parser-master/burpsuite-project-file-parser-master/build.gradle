@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'net.portswigger.burp.extender:burp-extender-api:2.3'
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'org.mongodb:mongo-java-driver:3.10.2'
+    implementation 'org.mongodb:bson:3.10.2'
+}
+
+task fatJar(type: Jar) {
+    baseName = project.name + '-all'
+    duplicatesStrategy = 'exclude'
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
